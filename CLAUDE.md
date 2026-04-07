@@ -6,13 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 RFIDtools is an Android application for RFID/NFC device management. It supports Proxmark3, phone NFC reader, ACS ACR-122u, Chameleon Mini, PN532, and PN53X-derived devices. Runs on non-rooted phones using LocalSocket/abstract namespace communication.
 
+This is a maintained fork of the original [RfidResearchGroup/RFIDtools](https://github.com/RfidResearchGroup/RFIDtools) (which is effectively abandoned). The upstream original developer (DXL) has been absent since 2021.
+
 ## Build
 
 - **IDE:** Android Studio
-- **Build system:** Gradle (AGP 7.1.2) + CMake 3.10+ for native code
-- **NDK:** 20.0.5594570+
-- **Java:** 1.8 compatibility
-- **Compile/Target SDK:** 33, Min SDK: 19-21 (varies by module)
+- **Build system:** Gradle 8.11.1 (AGP 8.7.3) + CMake 3.22.1 for native code
+- **NDK:** 28.0.13004108
+- **Java:** 17+ (tested with JDK 21)
+- **Compile/Target SDK:** 35, Min SDK: 26
 
 ```bash
 ./gradlew assembleDebug          # Build debug APK
@@ -20,7 +22,14 @@ RFIDtools is an Android application for RFID/NFC device management. It supports 
 ./gradlew :apprts:assembleDebug  # Build only the main app module
 ```
 
+Install on connected device:
+```bash
+adb install -r apprts/build/outputs/apk/debug/apprts-debug.apk
+```
+
 Native ABIs built: `x86`, `x86_64`, `armeabi-v7a`, `arm64-v8a`
+
+All native libraries use 16KB page alignment (`-Wl,-z,max-page-size=16384`) for Android 16 compatibility.
 
 ## Module Architecture
 
@@ -51,19 +60,23 @@ The main app (`apprts/`) follows **MVP (Model-View-Presenter)** pattern:
 
 ## Native Code (JNI/NDK)
 
-Extensive C/C++ code compiled via CMake (or ndk-build for terminal-emulator). JNI entry points:
+Extensive C/C++ code compiled via CMake 3.22.1 (or ndk-build for terminal-emulator) with NDK 28. JNI entry points:
 - `Proxmark3Flasher.java` — Native methods for PM3 flashing
 - `JNI.java` (terminal-emulator) — Terminal emulation
 
 CMake modules produce shared libraries: `crapto1.so`, `mfkey32.so`, `mfkey64.so`, `mfkey32v2.so`, `pm3_flasher.so`, plus libnfc-related libraries. Compiled with C99, `-O3`, hidden visibility, `c++_static` STL.
 
+Global variables in C headers (`tools.h`, `util.h`) use `extern` declarations with definitions in corresponding `.c` files. The libnfc module requires `-Wno-implicit-int -Wno-int-conversion -Wno-implicit-function-declaration` flags due to legacy C code.
+
 ## Key Dependencies
 
+- Gson 2.11.0 — JSON parsing (replaced fastjson which had CVEs)
 - MultiType 3.5.0 — Polymorphic RecyclerView adapter
-- FastJSON 1.2.59 — JSON parsing
-- Glide 4.5.0 — Image loading
+- Glide 4.16.0 — Image loading
 - UsbSerial 6.1.0 — USB serial communication
 - BannerViewPager 2.7.0 — Carousel UI
+- Material 1.12.0 — Material Design components
+- AppCompat 1.7.0 — Backwards compatibility
 
 ## Assets
 
