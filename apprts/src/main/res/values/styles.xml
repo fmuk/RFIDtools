@@ -30,17 +30,21 @@
         <item name="colorSurfaceInverse">@color/md_theme_inverseSurface</item>
         <item name="colorOnSurfaceInverse">@color/md_theme_inverseOnSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_inversePrimary</item>
+        <!-- Status bar matches surface for a clean, unified look -->
+        <item name="android:statusBarColor">?attr/colorSurface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
     </style>
 
     <style name="toolbarStyle" parent="@style/ThemeOverlay.Material3.ActionBar">
-        <item name="android:textColor">@color/md_theme_onPrimary</item>
-        <item name="android:colorBackground">?attr/colorPrimary</item>
-        <item name="android:textColorPrimary">@color/md_theme_onPrimary</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:colorBackground">?attr/colorSurface</item>
+        <item name="android:textColorPrimary">?attr/colorOnSurface</item>
     </style>
 
     <style name="popMenuStyle" parent="@style/ThemeOverlay.Material3.Light">
-        <item name="android:textColor">@color/md_theme_onSurface</item>
-        <item name="android:colorBackground">@color/md_theme_surface</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:colorBackground">?attr/colorSurface</item>
     </style>
 
     <style name="CircleDialogStyle" parent="ThemeOverlay.Material3.MaterialAlertDialog">
@@ -48,7 +52,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:textColor">@color/md_theme_onSurface</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:windowBackground">@drawable/bg_circular_grey_radius_16dp</item>
     </style>
 

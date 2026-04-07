@@ -80,7 +80,7 @@ Global variables in C headers (`tools.h`, `util.h`) use `extern` declarations wi
 
 ## Theming
 
-The app uses **Material 3** (`Theme.Material3.DayNight.NoActionBar`) with a teal color scheme. Color tokens are defined in:
+The app uses **Material 3** (`Theme.Material3.DayNight.NoActionBar`) with a professional slate blue color scheme. Color tokens are defined in:
 - `apprts/src/main/res/values/color.xml` (light theme)
 - `apprts/src/main/res/values-night/color.xml` (dark theme)
 
