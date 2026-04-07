@@ -1,13 +1,14 @@
 #需要的最cmake版本
-cmake_minimum_required(VERSION 3.4.1)
+cmake_minimum_required(VERSION 3.22.1)
 
 #设置全局宏定义，开启NDK配置定义!
 add_definitions("-D__ANDROID_NDK__")
 
 #添加预编译宏定义参数，此次的作用是开启配置文件的引入!
-add_definitions(-DANDROID -D "getlocaledecpoint()='.'")
+add_definitions(-DANDROID)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -O3 -fvisibility=hidden -w")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -O3 -fvisibility=hidden -w -Dgetlocaledecpoint\\(\\)='.'")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-z,max-page-size=16384")
 
 #缩短路径定义
 set(PM3_ROOT ${CMAKE_CURRENT_SOURCE_DIR})

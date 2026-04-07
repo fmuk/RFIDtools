@@ -19,7 +19,7 @@
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG,__VA_ARGS__)
 
 //全局的环境变量定义
-JavaVM *g_JavaVM;
+extern JavaVM *g_JavaVM;
 
 //线程环境指针获取函数
 JNIEnv *getJniEnv();

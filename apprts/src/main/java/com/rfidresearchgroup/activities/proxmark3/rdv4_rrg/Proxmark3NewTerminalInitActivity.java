@@ -32,13 +32,10 @@ public class Proxmark3NewTerminalInitActivity extends BaseActivity {
         rdoGroupTerminalSelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.rdoBtnFullTerminal:
-                        Commons.setTerminalType(0);
-                        break;
-                    case R.id.rdoBtnSimpleTerminal:
-                        Commons.setTerminalType(1);
-                        break;
+                if (checkedId == R.id.rdoBtnFullTerminal) {
+                    Commons.setTerminalType(0);
+                } else if (checkedId == R.id.rdoBtnSimpleTerminal) {
+                    Commons.setTerminalType(1);
                 }
             }
         });

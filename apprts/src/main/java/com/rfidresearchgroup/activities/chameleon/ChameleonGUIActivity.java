@@ -256,84 +256,56 @@ public class ChameleonGUIActivity
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnChameleon_Information_Dowmload:
-                getInfo();
-                break;
+        if (v.getId() == R.id.btnChameleon_Information_Dowmload) {
+            getInfo();
+        } else if (v.getId() == R.id.btnChameleon_UID_Set) {
+            setUid();
+        } else if (v.getId() == R.id.btnChameleon_Datas_Dowmload) {
+            download();
+        } else if (v.getId() == R.id.btnChameleon_Datas_Upload) {
+            upload();
+        } else if (v.getId() == R.id.btnChameleon_Datas_Reset) {
+            reset();
+        } else if (v.getId() == R.id.btnChameleon_Sniff_Decrypt) {
+            decrypt(true);
+        } else if (v.getId() == R.id.btnChameleon_Sniff_Decrypt_One) {
+            decrypt(false);
+        } else if (v.getId() == R.id.btnChameleon_Command_Send) {
+            sendAT();
+        } else if (v.getId() == R.id.btnChameleon_Command_Show) {
+            //通信对话框显示!!!
+            fpDialog.show();
+        } else if (v.getId() == R.id.btnChameleon_Version_Show) {
+            showVer();
+        } else if (v.getId() == R.id.btnChameleon_Device_Reset) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.tips)
+                    .setMessage(getString(R.string.msg_chameleon_reboot))
+                    .setNegativeButton(R.string.cancel, null)
+                    .setPositiveButton(getString(R.string.reset), (dialog, which) -> {
+                        util.resetDevice(new ResultCallback<String, String>() {
+                            @Override
+                            public void onSuccess(String s) {
+                                dialog.dismiss();
+                                RestartUtils.restartAPP(context, 1000, () -> true);
+                            }
 
-            case R.id.btnChameleon_UID_Set:
-                setUid();
-                break;
-
-            case R.id.btnChameleon_Datas_Dowmload:
-                download();
-                break;
-
-            case R.id.btnChameleon_Datas_Upload:
-                upload();
-                break;
-
-            case R.id.btnChameleon_Datas_Reset:
-                reset();
-                break;
-
-            case R.id.btnChameleon_Sniff_Decrypt:
-                decrypt(true);
-                break;
-
-            case R.id.btnChameleon_Sniff_Decrypt_One:
-                decrypt(false);
-                break;
-
-            case R.id.btnChameleon_Command_Send:
-                sendAT();
-                break;
-
-            case R.id.btnChameleon_Command_Show:
-                //通信对话框显示!!!
-                fpDialog.show();
-                break;
-
-            case R.id.btnChameleon_Version_Show:
-                showVer();
-                break;
-
-            case R.id.btnChameleon_Device_Reset:
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.tips)
-                        .setMessage(getString(R.string.msg_chameleon_reboot))
-                        .setNegativeButton(R.string.cancel, null)
-                        .setPositiveButton(getString(R.string.reset), (dialog, which) -> {
-                            util.resetDevice(new ResultCallback<String, String>() {
-                                @Override
-                                public void onSuccess(String s) {
-                                    dialog.dismiss();
-                                    RestartUtils.restartAPP(context, 1000, () -> true);
-                                }
-
-                                @Override
-                                public void onFaild(String s) {
-                                    showToast(s);
-                                }
-                            });
-                        }).show();
-                break;
-
-            case R.id.btnChameleon_Sniff_Decrypt_Log:
-                if (mMsgAdapter.getCount() == 0) {
-                    showToast(getString(R.string.msg_no_history));
-                } else {
-                    mMsgDialog.show();
-                }
-                break;
-
-            case R.id.btnChameleon_Slot_Aliases:
-                startActivity(new Intent(this, ChameleonSoltAliasesActivity.class));
-                break;
-
-            default:
-                //what are you doing???
-                break;
+                            @Override
+                            public void onFaild(String s) {
+                                showToast(s);
+                            }
+                        });
+                    }).show();
+        } else if (v.getId() == R.id.btnChameleon_Sniff_Decrypt_Log) {
+            if (mMsgAdapter.getCount() == 0) {
+                showToast(getString(R.string.msg_no_history));
+            } else {
+                mMsgDialog.show();
+            }
+        } else if (v.getId() == R.id.btnChameleon_Slot_Aliases) {
+            startActivity(new Intent(this, ChameleonSoltAliasesActivity.class));
+        } else {
+            //what are you doing???
         }
     }
 

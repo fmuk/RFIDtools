@@ -168,13 +168,10 @@ public class Proxmark3FirmwareActivity extends BaseActivity implements DevCallba
         rdoGroupImageSource.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.rdoBtnFromApp:
-                        layout_image_select.setVisibility(View.GONE);
-                        break;
-                    case R.id.rdoBtnFromUser:
-                        layout_image_select.setVisibility(View.VISIBLE);
-                        break;
+                if (checkedId == R.id.rdoBtnFromApp) {
+                    layout_image_select.setVisibility(View.GONE);
+                } else if (checkedId == R.id.rdoBtnFromUser) {
+                    layout_image_select.setVisibility(View.VISIBLE);
                 }
             }
         });

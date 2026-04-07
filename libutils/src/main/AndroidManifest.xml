@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rfidresearchgroup.common">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.NFC" />
@@ -21,9 +20,12 @@
         <service
             android:name="com.rfidresearchgroup.common.services.RestartService"
             android:enabled="true"
+            android:exported="false"
             android:process=":restart" />
 
-        <activity android:name="com.rfidresearchgroup.common.activities.CrashActivity" />
+        <activity
+            android:name="com.rfidresearchgroup.common.activities.CrashActivity"
+            android:exported="false" />
 
     </application>
 

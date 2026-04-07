@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
+    namespace 'com.rfidresearchgroup.rfidtools'
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.rfidresearchgroup.rfidtools"
-        minSdkVersion 21
-        targetSdkVersion 33
+        minSdk 26
+        targetSdk 35
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         versionCode 26
         versionName "1.4.8 SDK21 && PM3 CWD"
@@ -23,14 +24,10 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_8
-        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_17
     }
-    lintOptions {
-        //checkReleaseBuilds false
-        // Or, if you prefer, you can continue to check for errors in release builds,
-        // but continue the build even when errors are found:
-        //abortOnError false
+    lint {
         disable 'GoogleAppIndexingWarning'
     }
 }
@@ -41,16 +38,15 @@ dependencies {
             dir: 'libs'
     )
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'com.alibaba:fastjson:1.2.59'
     implementation 'me.drakeet.multitype:multitype:3.5.0'
     implementation 'com.github.zhpanvip:BannerViewPager:2.7.0'
-    implementation 'com.github.bumptech.glide:glide:4.5.0'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
 
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
 
     implementation project(':libcrapto1')
     implementation project(':libtag')

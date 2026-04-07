@@ -1,11 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 33
+    namespace 'com.rfidresearchgroup.libnfc'
+    compileSdk 35
+    ndkVersion '28.0.13004108'
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 33
+        minSdk 26
+        targetSdk 35
 
         externalNativeBuild {
             cmake {
@@ -18,7 +20,7 @@ android {
 
     externalNativeBuild {
         cmake {
-            version '3.10.2'
+            version '3.22.1'
             path 'src/main/cpp/CMakeLists.txt'
         }
     }
@@ -28,6 +30,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 

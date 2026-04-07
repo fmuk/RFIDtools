@@ -83,13 +83,10 @@ public abstract class DeviceConnectActivity
         bnvSwitch.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.menu_newDev:
-                        vpContainer.setCurrentItem(0);
-                        break;
-                    case R.id.menu_existDev:
-                        vpContainer.setCurrentItem(1);
-                        break;
+                if (menuItem.getItemId() == R.id.menu_newDev) {
+                    vpContainer.setCurrentItem(0);
+                } else if (menuItem.getItemId() == R.id.menu_existDev) {
+                    vpContainer.setCurrentItem(1);
                 }
                 return true;
             }

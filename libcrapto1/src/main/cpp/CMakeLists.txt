@@ -1,5 +1,7 @@
 #需要的最cmake版本
-cmake_minimum_required(VERSION 3.4.1)
+cmake_minimum_required(VERSION 3.22.1)
+
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-z,max-page-size=16384")
 
 #进行库(动态)的添加,在之后的参数中引入cpp/c文件
 add_library(

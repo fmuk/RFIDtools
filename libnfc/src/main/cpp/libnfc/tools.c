@@ -7,6 +7,8 @@
 #include <tools.h>
 #include "stdbool.h"
 
+JavaVM *g_JavaVM;
+
 //当前线程是否添加的标志位
 static bool g_IsAttach;
 

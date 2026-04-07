@@ -56,17 +56,13 @@ public class AppMain extends BaseActivity {
         bnvMain.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.item_main:
-                        // goto main page!
-                        gotoFragment(appMainDevicesFragment);
-                        break;
-                    case R.id.item_tools:
-                        gotoFragment(toolsAccessFragment);
-                        break;
-                    case R.id.item_setting:
-                        gotoFragment(mainSettingsFragment);
-                        break;
+                if (item.getItemId() == R.id.item_main) {
+                    // goto main page!
+                    gotoFragment(appMainDevicesFragment);
+                } else if (item.getItemId() == R.id.item_tools) {
+                    gotoFragment(toolsAccessFragment);
+                } else if (item.getItemId() == R.id.item_setting) {
+                    gotoFragment(mainSettingsFragment);
                 }
                 return true;
             }

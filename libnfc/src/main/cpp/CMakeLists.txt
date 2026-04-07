@@ -7,7 +7,11 @@
 #########################################################
 
 #需要的最cmake版本
-cmake_minimum_required(VERSION 3.4.1)
+cmake_minimum_required(VERSION 3.22.1)
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit-int -Wno-int-conversion -Wno-implicit-function-declaration")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-z,max-page-size=16384")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,max-page-size=16384")
 
 #提供啰嗦(详细)的日志输出
 set(CMAKE_VERBOSE_MAKEFILE on)

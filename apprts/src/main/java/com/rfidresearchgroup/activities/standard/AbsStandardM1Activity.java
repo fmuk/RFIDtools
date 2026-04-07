@@ -57,13 +57,10 @@ public abstract class AbsStandardM1Activity
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 //在点击底部的视图时，切换按钮!
-                switch (menuItem.getItemId()) {
-                    case R.id.menu_operational_items:
-                        viewPager.setCurrentItem(0);
-                        break;
-                    case R.id.menu_tag_information:
-                        viewPager.setCurrentItem(1);
-                        break;
+                if (menuItem.getItemId() == R.id.menu_operational_items) {
+                    viewPager.setCurrentItem(0);
+                } else if (menuItem.getItemId() == R.id.menu_tag_information) {
+                    viewPager.setCurrentItem(1);
                 }
                 return true;
             }

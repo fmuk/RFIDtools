@@ -1,5 +1,7 @@
 #需要的最cmake版本
-cmake_minimum_required(VERSION 3.4.1)
+cmake_minimum_required(VERSION 3.22.1)
+
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-z,max-page-size=16384")
 
 #添加动态库定义
 add_library(mfkey32 SHARED
