@@ -86,6 +86,12 @@ Global variables in C headers (`tools.h`, `util.h`) use `extern` declarations wi
 - `proxmark3.zip` — Bundled Proxmark3 executable
 - HTML templates for tag info display
 
+## Storage
+
+The app uses **scoped storage** via `Context.getExternalFilesDir()`. All app data lives under `/sdcard/Android/data/com.rfidresearchgroup.rfidtools/files/NfcTools/`. No storage permissions are needed.
+
+`Paths.init(Context)` must be called before any `Paths.*` fields are accessed (currently called in `LoginActivity.onCreate()`).
+
 ## Communication Model
 
 Device communication goes through `libcom/` abstractions. Proxmark3 client runs as a Linux executable on the device, communicating via LocalSocket with abstract namespace (no root needed).

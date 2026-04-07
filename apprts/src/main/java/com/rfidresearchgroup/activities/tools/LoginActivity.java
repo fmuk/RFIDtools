@@ -19,6 +19,7 @@ import com.rfidresearchgroup.fragment.init.InitFragment;
 import com.rfidresearchgroup.fragment.init.LoginFragment;
 import com.rfidresearchgroup.rfidtools.R;
 import com.rfidresearchgroup.util.Commons;
+import com.rfidresearchgroup.util.Paths;
 
 import com.rfidresearchgroup.common.application.App;
 import com.rfidresearchgroup.common.util.AppUtil;
@@ -29,8 +30,6 @@ import com.rfidresearchgroup.common.util.FragmentUtil;
 import com.rfidresearchgroup.common.util.PermissionUtil;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 /*
  * 登陆界面，，用于登陆用户系统，初始化环境，对于用户的验证，都放在这里实现
@@ -43,6 +42,7 @@ public class LoginActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Paths.init(this);
         setContentView(R.layout.act_login_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -96,19 +96,17 @@ public class LoginActivity
         });
 
         ArrayList<String> permissionArray = new ArrayList<>();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-            Collections.addAll(permissionArray,
-                    // 以下是一定要添加的权限
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-            );
+
+        // Android 12+: Bluetooth permissions
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            permissionArray.add(Manifest.permission.BLUETOOTH_SCAN);
+            permissionArray.add(Manifest.permission.BLUETOOTH_CONNECT);
+            permissionArray.add(Manifest.permission.BLUETOOTH_ADVERTISE);
         }
 
-        // android 12或者以上，要单独申请蓝牙权限
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            permissionArray.add( Manifest.permission.BLUETOOTH_SCAN);
-            permissionArray.add( Manifest.permission.BLUETOOTH_CONNECT);
-            permissionArray.add( Manifest.permission.BLUETOOTH_ADVERTISE);
+        // Android 13+: Notification permission
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissionArray.add(Manifest.permission.POST_NOTIFICATIONS);
         }
 
         permissionUtil.setPermissions(permissionArray.toArray(new String[]{}));

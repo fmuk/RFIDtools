@@ -71,7 +71,7 @@ public final class FilesSelectorDialog extends FillParentWidthDialog {
     private ArrayList<File> fileViewsList = new ArrayList<>(512);
     private ArrayList<File> fileSelectedList = new ArrayList<>(512);
     private File[] fileSelectedHistory = null;
-    private File defaultPath = Environment.getExternalStorageDirectory();
+    private File defaultPath;
     private FileFilter mFileFilter = null;
     private Comparator<File> comparator = new Comparator<File>() {
         @Override
@@ -135,6 +135,8 @@ public final class FilesSelectorDialog extends FillParentWidthDialog {
 
     private FilesSelectorDialog(@NonNull Context context) {
         super(context);
+        File externalFiles = context.getExternalFilesDir(null);
+        defaultPath = externalFiles != null ? externalFiles : context.getFilesDir();
         initViews();
         initActions();
     }
@@ -310,7 +312,8 @@ public final class FilesSelectorDialog extends FillParentWidthDialog {
                 new LoadThread(dir).start();
             } else {
                 //重置目录
-                defaultPath = Environment.getExternalStorageDirectory();
+                File externalFiles = getContext().getExternalFilesDir(null);
+                defaultPath = externalFiles != null ? externalFiles : getContext().getFilesDir();
                 selectorAdapter.clearSelecetedOnBack();
                 new LoadThread(defaultPath).start();
             }
