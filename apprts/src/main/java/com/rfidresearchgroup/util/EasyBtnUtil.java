@@ -1,8 +1,10 @@
 package com.rfidresearchgroup.util;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONWriter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,15 +19,27 @@ import com.rfidresearchgroup.javabean.EasyCMDEntry;
  * */
 public class EasyBtnUtil {
     private File cmdXmlFile = new File(Paths.PM3_CMD_FILE);
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    private JsonObject readRoot() throws Exception {
+        String content = new String(FileUtils.readBytes(cmdXmlFile));
+        return JsonParser.parseString(content).getAsJsonObject();
+    }
+
+    private void writeRoot(JsonObject jsonObject) throws Exception {
+        FileWriter writer = new FileWriter(cmdXmlFile);
+        gson.toJson(jsonObject, writer);
+        writer.flush();
+        writer.close();
+    }
 
     /*
      * 可以获得组元素个数
      * */
     public int getGroupCount() {
         try {
-            JSONObject jsonObject = JSONObject.parseObject(new String(FileUtils.readBytes(cmdXmlFile)));
-            //得到一个组对象，这个数组种存放了一个键值对的数组，也就是一个二维数组!
-            JSONArray array = jsonObject.getJSONArray("group");
+            JsonObject jsonObject = readRoot();
+            JsonArray array = jsonObject.getAsJsonArray("group");
             return array.size();
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,10 +52,9 @@ public class EasyBtnUtil {
      * */
     public int getButtonCount(int group) {
         try {
-            JSONObject jsonObject = JSONObject.parseObject(new String(FileUtils.readBytes(cmdXmlFile)));
-            //得到一个组对象，这个数组种存放了一个键值对的数组，也就是一个二维数组!
-            JSONArray array = jsonObject.getJSONArray("group");
-            JSONArray innerArr = array.getJSONArray(group);
+            JsonObject jsonObject = readRoot();
+            JsonArray array = jsonObject.getAsJsonArray("group");
+            JsonArray innerArr = array.get(group).getAsJsonArray();
             return innerArr.size();
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,14 +67,13 @@ public class EasyBtnUtil {
      * */
     public EasyCMDEntry getButton(int group, int buttonPosition) {
         try {
-            JSONObject jsonObject = JSONObject.parseObject(new String(FileUtils.readBytes(cmdXmlFile)));
-            //得到一个组对象，这个数组种存放了一个键值对的数组，也就是一个二维数组!
-            JSONArray array = jsonObject.getJSONArray("group");
-            JSONArray innerArr = array.getJSONArray(group);
+            JsonObject jsonObject = readRoot();
+            JsonArray array = jsonObject.getAsJsonArray("group");
+            JsonArray innerArr = array.get(group).getAsJsonArray();
             EasyCMDEntry entry = new EasyCMDEntry();
-            JSONObject jsonObjectInner = innerArr.getJSONObject(buttonPosition);
-            entry.setCmdName(jsonObjectInner.getString("name"));
-            entry.setCommand(jsonObjectInner.getString("cmd"));
+            JsonObject jsonObjectInner = innerArr.get(buttonPosition).getAsJsonObject();
+            entry.setCmdName(jsonObjectInner.get("name").getAsString());
+            entry.setCommand(jsonObjectInner.get("cmd").getAsString());
             return entry;
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,14 +98,10 @@ public class EasyBtnUtil {
      * */
     public boolean deteleGroup(int group) {
         try {
-            JSONObject jsonObject = JSONObject.parseObject(new String(FileUtils.readBytes(cmdXmlFile)));
-            //得到一个组对象，这个数组种存放了一个键值对的数组，也就是一个二维数组!
-            JSONArray array = jsonObject.getJSONArray("group");
+            JsonObject jsonObject = readRoot();
+            JsonArray array = jsonObject.getAsJsonArray("group");
             array.remove(group);
-            JSONWriter writer = new JSONWriter(new FileWriter(cmdXmlFile));
-            writer.writeObject(jsonObject);
-            writer.flush();
-            writer.close();
+            writeRoot(jsonObject);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -107,15 +115,11 @@ public class EasyBtnUtil {
     public boolean deleteButton(int group, int button) {
         try {
             button += 1;
-            JSONObject jsonObject = JSONObject.parseObject(new String(FileUtils.readBytes(cmdXmlFile)));
-            //得到一个组对象，这个数组种存放了一个键值对的数组，也就是一个二维数组!
-            JSONArray array = jsonObject.getJSONArray("group");
-            JSONArray innerArr = array.getJSONArray(group);
+            JsonObject jsonObject = readRoot();
+            JsonArray array = jsonObject.getAsJsonArray("group");
+            JsonArray innerArr = array.get(group).getAsJsonArray();
             innerArr.remove(button);
-            JSONWriter writer = new JSONWriter(new FileWriter(cmdXmlFile));
-            writer.writeObject(jsonObject);
-            writer.flush();
-            writer.close();
+            writeRoot(jsonObject);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,21 +132,14 @@ public class EasyBtnUtil {
      * */
     public boolean inertGroup(String name) {
         try {
-            //根数组对象
-            JSONObject jsonObject = JSONObject.parseObject(new String(FileUtils.readBytes(cmdXmlFile)));
-            //得到一个组对象，这个数组种存放了一个键值对的数组，也就是一个二维数组!
-            JSONArray array = jsonObject.getJSONArray("group");
-            //建立一个新的组，并且放入一个组名键值对元素!
-            JSONArray newGroup = new JSONArray();
-            JSONObject newObj = new JSONObject();
-            newObj.put("name", name);
+            JsonObject jsonObject = readRoot();
+            JsonArray array = jsonObject.getAsJsonArray("group");
+            JsonArray newGroup = new JsonArray();
+            JsonObject newObj = new JsonObject();
+            newObj.addProperty("name", name);
             newGroup.add(newObj);
-            //将我们新建立的组与之放置的组参数对象写入到本地文件中!
             array.add(newGroup);
-            JSONWriter writer = new JSONWriter(new FileWriter(cmdXmlFile));
-            writer.writeObject(jsonObject);
-            writer.flush();
-            writer.close();
+            writeRoot(jsonObject);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,21 +152,14 @@ public class EasyBtnUtil {
      * */
     public boolean inertButton(int group, String name, String cmd) {
         try {
-            //根数组对象
-            JSONObject jsonObject = JSONObject.parseObject(new String(FileUtils.readBytes(cmdXmlFile)));
-            //得到一个组对象，这个数组种存放了一个键值对的数组，也就是一个二维数组!
-            JSONArray array = jsonObject.getJSONArray("group");
-            //建立一个新的组，并且放入一个组名键值对元素!
-            JSONArray innerArr = array.getJSONArray(group);
-            JSONObject newObj = new JSONObject();
-            newObj.put("name", name);
-            newObj.put("cmd", cmd);
-            //将我们新建立的btn放置进组对象当中!
+            JsonObject jsonObject = readRoot();
+            JsonArray array = jsonObject.getAsJsonArray("group");
+            JsonArray innerArr = array.get(group).getAsJsonArray();
+            JsonObject newObj = new JsonObject();
+            newObj.addProperty("name", name);
+            newObj.addProperty("cmd", cmd);
             innerArr.add(newObj);
-            JSONWriter writer = new JSONWriter(new FileWriter(cmdXmlFile));
-            writer.writeObject(jsonObject);
-            writer.flush();
-            writer.close();
+            writeRoot(jsonObject);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -182,19 +172,12 @@ public class EasyBtnUtil {
      * */
     public boolean updateGroup(int group, String name) {
         try {
-            //根数组对象
-            JSONObject jsonObject = JSONObject.parseObject(new String(FileUtils.readBytes(cmdXmlFile)));
-            //得到一个组对象，这个数组种存放了一个键值对的数组，也就是一个二维数组!
-            JSONArray array = jsonObject.getJSONArray("group");
-            //建立一个新的组，并且放入一个组名键值对元素!
-            JSONArray innerArr = array.getJSONArray(group);
-            JSONObject innerObj = innerArr.getJSONObject(0);
-            innerObj.put("name", name);
-            //将我们新建立的btn放置进组对象当中!
-            JSONWriter writer = new JSONWriter(new FileWriter(cmdXmlFile));
-            writer.writeObject(jsonObject);
-            writer.flush();
-            writer.close();
+            JsonObject jsonObject = readRoot();
+            JsonArray array = jsonObject.getAsJsonArray("group");
+            JsonArray innerArr = array.get(group).getAsJsonArray();
+            JsonObject innerObj = innerArr.get(0).getAsJsonObject();
+            innerObj.addProperty("name", name);
+            writeRoot(jsonObject);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -208,20 +191,13 @@ public class EasyBtnUtil {
     public boolean updateButton(int group, int button, String name, String cmd) {
         try {
             button += 1;
-            //根数组对象
-            JSONObject jsonObject = JSONObject.parseObject(new String(FileUtils.readBytes(cmdXmlFile)));
-            //得到一个组对象，这个数组种存放了一个键值对的数组，也就是一个二维数组!
-            JSONArray array = jsonObject.getJSONArray("group");
-            //建立一个新的组，并且放入一个组名键值对元素!
-            JSONArray innerArr = array.getJSONArray(group);
-            JSONObject innerObj = innerArr.getJSONObject(button);
-            innerObj.put("name", name);
-            innerObj.put("cmd", cmd);
-            //将我们新建立的btn放置进组对象当中!
-            JSONWriter writer = new JSONWriter(new FileWriter(cmdXmlFile));
-            writer.writeObject(jsonObject);
-            writer.flush();
-            writer.close();
+            JsonObject jsonObject = readRoot();
+            JsonArray array = jsonObject.getAsJsonArray("group");
+            JsonArray innerArr = array.get(group).getAsJsonArray();
+            JsonObject innerObj = innerArr.get(button).getAsJsonObject();
+            innerObj.addProperty("name", name);
+            innerObj.addProperty("cmd", cmd);
+            writeRoot(jsonObject);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
