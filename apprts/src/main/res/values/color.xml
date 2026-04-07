@@ -1,54 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">@color/md_white_1000</color>
-    <color name="colorPrimaryDark">@color/md_white_1000</color>
-    <color name="colorAccent">@color/colorTextNormal</color>
-    <color name="colorBackground">@color/md_grey_200</color>
-    <color name="colorTextNormal">@color/md_grey_800</color>
-    <color name="colorTextWeaker">@color/md_grey_600</color>
+    <!-- Material 3 color tokens (light theme) -->
+    <color name="md_theme_primary">#006B5E</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_primaryContainer">#76F8E2</color>
+    <color name="md_theme_onPrimaryContainer">#00201B</color>
 
-    <!--reds-->
+    <color name="md_theme_secondary">#4B635D</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer">#CDE8E0</color>
+    <color name="md_theme_onSecondaryContainer">#07201B</color>
+
+    <color name="md_theme_tertiary">#426278</color>
+    <color name="md_theme_onTertiary">#FFFFFF</color>
+    <color name="md_theme_tertiaryContainer">#C7E7FF</color>
+    <color name="md_theme_onTertiaryContainer">#001E2E</color>
+
+    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_onError">#FFFFFF</color>
+    <color name="md_theme_errorContainer">#FFDAD6</color>
+    <color name="md_theme_onErrorContainer">#410002</color>
+
+    <color name="md_theme_background">#FAFDFB</color>
+    <color name="md_theme_onBackground">#191C1B</color>
+    <color name="md_theme_surface">#FAFDFB</color>
+    <color name="md_theme_onSurface">#191C1B</color>
+    <color name="md_theme_surfaceVariant">#DBE5E0</color>
+    <color name="md_theme_onSurfaceVariant">#3F4945</color>
+    <color name="md_theme_outline">#6F7975</color>
+    <color name="md_theme_outlineVariant">#BFC9C4</color>
+    <color name="md_theme_inverseSurface">#2E3130</color>
+    <color name="md_theme_inverseOnSurface">#EFF1EF</color>
+    <color name="md_theme_inversePrimary">#55DBC6</color>
+    <color name="md_theme_surfaceTint">#006B5E</color>
+
+    <!-- Legacy color aliases (referenced by existing layouts/code) -->
+    <color name="colorPrimary">@color/md_theme_primary</color>
+    <color name="colorPrimaryDark">@color/md_theme_primary</color>
+    <color name="colorAccent">@color/md_theme_tertiary</color>
+    <color name="colorBackground">@color/md_theme_background</color>
+    <color name="colorTextNormal">@color/md_theme_onSurface</color>
+    <color name="colorTextWeaker">@color/md_theme_onSurfaceVariant</color>
+
+    <!-- Utility colors still referenced in code -->
     <color name="md_red_A700">#D50000</color>
-
-    <!-- pinks -->
-
-    <!-- purples -->
-
-    <!-- deep purples -->
-
-    <!-- indigo -->
-
-    <!--blue-->
     <color name="md_blue_600">#1E88E5</color>
     <color name="md_blue_700">#1976D2</color>
     <color name="md_blue_800">#1565C0</color>
-
-    <!-- light blue-->
-
-    <!-- cyan -->
-
-    <!-- teal -->
-
-    <!-- green -->
     <color name="md_green_600">#43A047</color>
-
-    <!--light green-->
-
-    <!-- lime-->
-
-    <!--yellow -->
-
-    <!--amber-->
-
-    <!--orange-->
     <color name="md_orange_600">#FB8C00</color>
-
-    <!--deep orange-->
-
-    <!--brown -->
-
-    <!--grey-->
     <color name="md_grey_50">#FAFAFA</color>
     <color name="md_grey_100">#F5F5F5</color>
     <color name="md_grey_200">#EEEEEE</color>
@@ -57,9 +58,7 @@
     <color name="md_grey_700">#616161</color>
     <color name="md_grey_800">#424242</color>
     <color name="md_grey_900">#212121</color>
-    <color name="md_white_1000">#ffffff</color>
-
-    <!--blue grey-->
+    <color name="md_white_1000">#FFFFFF</color>
     <color name="md_blue_grey_900">#263238</color>
 
 </resources>

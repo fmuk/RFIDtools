@@ -1,15 +1,12 @@
 <resources>
 
-    <style name="toolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <!--菜单文本的颜色-->
+    <style name="toolbarStyle" parent="@style/ThemeOverlay.Material3.ActionBar">
         <item name="android:textColor">@color/md_white_1000</item>
-        <!--背景颜色-->
         <item name="android:colorBackground">?attr/colorPrimary</item>
-        <!--appbar文本的颜色-->
         <item name="android:textColorPrimary">@color/md_white_1000</item>
     </style>
 
-    <style name="popMenuStyle" parent="@style/ThemeOverlay.AppCompat">
+    <style name="popMenuStyle" parent="@style/ThemeOverlay.Material3.Light">
         <item name="android:textColor">@color/md_grey_800</item>
         <item name="android:colorBackground">@color/md_white_1000</item>
     </style>
@@ -29,22 +26,13 @@
         <item name="android:textColor">@color/md_orange_600</item>
     </style>
 
-    <!--Spinner样式-->
-
-    <style name="FillParentWidthDialog" parent="Base.V7.Theme.AppCompat.Light.Dialog">
-        <!-- 有无边框 -->
+    <style name="FillParentWidthDialog" parent="ThemeOverlay.Material3.Dialog">
         <item name="android:windowFrame">@null</item>
-        <!-- 是否浮现在activity之上 -->
         <item name="android:windowIsFloating">true</item>
-        <!-- 是否透明 -->
         <item name="android:windowIsTranslucent">true</item>
-        <!-- 背景透明 -->
         <item name="android:windowBackground">@color/md_white_1000</item>
-        <!-- 模糊 -->
         <item name="android:backgroundDimEnabled">true</item>
-        <!--无标题 -->
         <item name="android:windowNoTitle">true</item>
     </style>
-
 
 </resources>

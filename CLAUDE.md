@@ -75,8 +75,16 @@ Global variables in C headers (`tools.h`, `util.h`) use `extern` declarations wi
 - Glide 4.16.0 — Image loading
 - UsbSerial 6.1.0 — USB serial communication
 - BannerViewPager 2.7.0 — Carousel UI
-- Material 1.12.0 — Material Design components
+- Material 1.12.0 — Material Design 3 components
 - AppCompat 1.7.0 — Backwards compatibility
+
+## Theming
+
+The app uses **Material 3** (`Theme.Material3.DayNight.NoActionBar`) with a teal color scheme. Color tokens are defined in:
+- `apprts/src/main/res/values/color.xml` (light theme)
+- `apprts/src/main/res/values-night/color.xml` (dark theme)
+
+Dark mode is supported via DayNight theme and follows system settings.
 
 ## Assets
 
