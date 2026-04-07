@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ActivityNotFoundException;
+import android.content.pm.ServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -204,7 +205,12 @@ public final class TermuxService extends Service implements SessionChangedCallba
     @Override
     public void onCreate() {
         setupNotificationChannel();
-        startForeground(NOTIFICATION_ID, buildNotification());
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            startForeground(NOTIFICATION_ID, buildNotification(),
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
+        } else {
+            startForeground(NOTIFICATION_ID, buildNotification());
+        }
     }
 
     /**
